@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gohtml
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gohtml
+  template:
+    metadata:
+      labels:
+        app: gohtml
+    spec:
+      containers:
+        - name: gohtml
+          image: maxim/gohtml:latest
+          imagePullPolicy: IfNotPresent
