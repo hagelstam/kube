@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gohtml-dep
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: gohtml
+  template:
+    metadata:
+      labels:
+        app: gohtml
+    spec:
+      containers:
+        - name: gohtml
+          image: maxim/gohtml:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
