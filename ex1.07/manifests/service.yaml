@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: golog-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: golog
+  ports:
+    - port: 2345
+      targetPort: 3000
+      protocol: TCP
