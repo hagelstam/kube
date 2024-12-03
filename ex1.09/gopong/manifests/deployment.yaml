@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gopong-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gopong
+  template:
+    metadata:
+      labels:
+        app: gopong
+    spec:
+      containers:
+        - name: gopong
+          image: maxim/gopong:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8081
