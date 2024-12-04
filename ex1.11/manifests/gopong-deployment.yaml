@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gopong-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gopong
+  template:
+    metadata:
+      labels:
+        app: gopong
+    spec:
+      volumes:
+        - name: shared-file
+          persistentVolumeClaim:
+            claimName: file-claim
+      containers:
+        - name: gopong
+          image: maxim/gopong:latest
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: ~/files
+              name: shared-file

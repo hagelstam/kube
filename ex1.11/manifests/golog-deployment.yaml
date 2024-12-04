@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golog-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: golog
+  template:
+    metadata:
+      labels:
+        app: golog
+    spec:
+      volumes:
+        - name: shared-file
+          persistentVolumeClaim:
+            claimName: file-claim
+      containers:
+        - name: golog
+          image: maxim/golog:latest
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: ~/files
+              name: shared-file
