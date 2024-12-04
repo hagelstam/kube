@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gopic-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gopic
+  template:
+    metadata:
+      labels:
+        app: gopic
+    spec:
+      volumes:
+        - name: persisted-volume
+          persistentVolumeClaim:
+            claimName: persisted-claim
+      containers:
+        - name: gopic
+          image: maxim/gopic:latest
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: persisted-volume
+              mountPath: /usr/src/app/cache
