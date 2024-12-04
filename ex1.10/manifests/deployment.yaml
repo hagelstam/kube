@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: filelog-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: filelog-dep
+  template:
+    metadata:
+      labels:
+        app: filelog-dep
+    spec:
+      volumes:
+        - name: shared-volume
+          emptyDir: {}
+      containers:
+        - name: log-writer
+          image: maxim/log-writer:latest
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: shared-volume
+              mountPath: ~/filelog
+        - name: log-reader
+          image: maxim/log-reader:latest
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: shared-volume
+              mountPath: ~/filelog
