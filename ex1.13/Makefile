@@ -1,8 +1,6 @@
-build:
-	@docker build -t maxim/gopic:latest .
-
-run:
-	@docker run -p 3000:3000 maxim/gopic:latest
+build-all:
+	@cd backend && make docker-build
+	@cd frontend && npm run docker:build
 
 deploy:
 	@kubectl apply -f manifests/deployment.yaml
@@ -11,6 +9,6 @@ deploy:
 	@kubectl apply -f manifests/persistentvolume.yaml
 	@kubectl apply -f manifests/persistentvolumeclaim.yaml
 
-mkdir-kube:
+tmp-dir:
 	@docker exec k3d-k3s-default-server-0 mkdir -p /tmp/kube
 	@docker exec k3d-k3s-default-server-0 chmod 777 /tmp/kube
