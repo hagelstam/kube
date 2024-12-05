@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-app
+  namespace: project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-app
+  template:
+    metadata:
+      labels:
+        app: todo-app
+    spec:
+      volumes:
+        - name: persisted-volume
+          persistentVolumeClaim:
+            claimName: persisted-claim
+      containers:
+        - name: todo-app
+          image: maxim/todo-app:latest
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: persisted-volume
+              mountPath: /usr/src/app/cache
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-backend
+  namespace: project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-backend
+  template:
+    metadata:
+      labels:
+        app: todo-backend
+    spec:
+      containers:
+        - name: todo-backend
+          image: maxim/todo-backend:latest
+          imagePullPolicy: IfNotPresent
