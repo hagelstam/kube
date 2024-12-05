@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Todo App</title>
+    <style>
+      body {
+        font-family: Inter, sans-serif;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .todo-list {
+        list-style-type: none;
+        padding: 0;
+      }
+      .todo-list li {
+        background-color: #f4f4f4;
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .todo-form {
+        display: flex;
+        margin-bottom: 20px;
+      }
+      .todo-form input {
+        flex-grow: 1;
+        padding: 10px;
+        margin-right: 10px;
+      }
+      .todo-form button {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Todo</h1>
+
+    <img src="/image" alt="Random image" height="400px" width="400px" />
+
+    <form class="todo-form" action="/create" method="post">
+      <input
+        type="text"
+        name="todo"
+        placeholder="Enter a new todo"
+        required
+        maxlength="140"
+      />
+      <button type="submit">Create</button>
+    </form>
+
+    <ul class="todo-list">
+      {{range .}}
+      <li>{{.Text}} (ID: {{.ID}})</li>
+      {{else}}
+      <li>No todos yet!</li>
+      {{end}}
+    </ul>
+  </body>
+</html>
