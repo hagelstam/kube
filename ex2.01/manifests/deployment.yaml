@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gopong
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gopong
+  template:
+    metadata:
+      labels:
+        app: gopong
+    spec:
+      containers:
+        - name: gopong
+          image: maxim/gopong:latest
+          imagePullPolicy: IfNotPresent
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: golog
+  template:
+    metadata:
+      labels:
+        app: golog
+    spec:
+      containers:
+        - name: golog
+          image: maxim/golog:latest
+          imagePullPolicy: IfNotPresent
