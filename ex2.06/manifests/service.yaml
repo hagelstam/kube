@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gopong-svc
+  namespace: dwk
+spec:
+  type: ClusterIP
+  selector:
+    app: gopong
+  ports:
+    - port: 3001
+      targetPort: 3001
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: golog-svc
+  namespace: dwk
+spec:
+  type: ClusterIP
+  selector:
+    app: golog
+  ports:
+    - port: 3000
+      protocol: TCP
+      targetPort: 3000

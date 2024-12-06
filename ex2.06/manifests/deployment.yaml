@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gopong
+  namespace: dwk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gopong
+  template:
+    metadata:
+      labels:
+        app: gopong
+    spec:
+      containers:
+        - name: gopong
+          image: maxim/gopong:latest
+          imagePullPolicy: IfNotPresent
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golog
+  namespace: dwk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: golog
+  template:
+    metadata:
+      labels:
+        app: golog
+    spec:
+      containers:
+        - name: golog
+          image: maxim/golog:latest
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: info
+              mountPath: /etc/config
+              readOnly: true
+          env:
+            - name: MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: info
+                  key: message
+      volumes:
+        - name: info
+          configMap:
+            name: info
