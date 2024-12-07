@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: info
+  namespace: dwk
+data:
+  information.txt: |
+    This is a message from the file
+  message: "Hello from ConfigMap"
