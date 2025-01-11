@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ponglog-ing
+  namespace: dwk
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: golog-svc
+                port:
+                  number: 80
+          - path: /pingpong
+            pathType: Prefix
+            backend:
+              service:
+                name: gopong-svc
+                port:
+                  number: 80

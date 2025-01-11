@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golog
+  namespace: dwk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: golog
+  template:
+    metadata:
+      labels:
+        app: golog
+    spec:
+      containers:
+        - name: golog
+          image: maximilianhagelstam/golog:latest
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: info
+              mountPath: /etc/config
+              readOnly: true
+          env:
+            - name: MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: info
+                  key: message
+      volumes:
+        - name: info
+          configMap:
+            name: info
